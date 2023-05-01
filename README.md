@@ -1,2 +1,2 @@
 # forum
-Forum wiith Next.js, Go and PostgreSQL
+Данный репозиторий является студенческим проектом.
