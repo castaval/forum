@@ -3,12 +3,38 @@ package main
 import (
 	"fmt"
 	"forum/internal/data"
+	"forum/internal/validator"
 	"net/http"
 	"time"
 )
 
 func (app *application) createChannelHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "create a new channel")
+	var input struct {
+		UserID int64  `json:"user_id"`
+		Title  string `json:"title"`
+	}
+
+	err := app.readJSON(w, r, &input)
+	if err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	channel := &data.Channel{
+		Title:     input.Title,
+		UserID:    input.UserID,
+		CreatedAt: time.Now(),
+		Version:   1,
+	}
+
+	v := validator.New()
+
+	if data.ValidateChannel(v, channel); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+	}
+
+	fmt.Fprintf(w, "%+v\n", input)
 }
 
 func (app *application) showChannelHandler(w http.ResponseWriter, r *http.Request) {
