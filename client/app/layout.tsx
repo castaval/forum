@@ -2,8 +2,9 @@ import { AppProps } from "next/app";
 import './global.css';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { ReactNode } from "react";
 
-const RootLayout = ({children}) => {
+const RootLayout = ({children}: {children: ReactNode}) => {
 
     return (
       <>
