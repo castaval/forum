@@ -22,3 +22,6 @@
 
 # vscode
 .vscode
+
+db
+.env
