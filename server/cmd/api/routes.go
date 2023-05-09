@@ -12,6 +12,7 @@ func (app *application) routes() *chi.Mux {
 
 	router.Post("/v1/channels", app.createChannelHandler)
 	router.Get("/v1/channels/{id}", app.showChannelHandler)
-
+	router.Patch("/v1/channels/{id}", app.updateChannelHandler)
+	router.Delete("/v1/channels/{id}", app.deleteChannelHandler)
 	return router
 }
