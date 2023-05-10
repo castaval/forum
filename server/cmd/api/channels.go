@@ -101,6 +101,11 @@ func (app *application) updateChannelHandler(w http.ResponseWriter, r *http.Requ
 
 	err = app.models.Channels.Update(&channel)
 	if err != nil {
+		if errors.Is(err, data.ErrEditConflict) {
+			app.editConflictResponse(w, r)
+			return
+		}
+
 		app.serverErrorResponse(w, r, err)
 		return
 	}
