@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"forum/internal/validator"
 	"time"
 )
@@ -126,4 +127,51 @@ func (c ChannelModel) Delete(id int64) error {
 	}
 
 	return nil
+}
+
+func (c ChannelModel) GetAll(filters Filters) ([]*Channel, Metadata, error) {
+	query := fmt.Sprintf(`
+		SELECT count(*) OVER(), id, created_at, title, version
+		FROM channels
+		ORDER by %s %s, id ASC
+		LIMIT $1 OFFSET $2`, filters.sortColumn(), filters.sortDirection())
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	args := []interface{}{filters.limit(), filters.offset()}
+
+	rows, err := c.DB.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, Metadata{}, err
+	}
+	defer rows.Close()
+
+	totalRecords := 0
+	channels := []*Channel{}
+
+	for rows.Next() {
+		var channel Channel
+
+		err := rows.Scan(
+			&totalRecords,
+			&channel.ID,
+			&channel.CreatedAt,
+			&channel.Title,
+			&channel.Version,
+		)
+		if err != nil {
+			return nil, Metadata{}, err
+		}
+
+		channels = append(channels, &channel)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, Metadata{}, err
+	}
+
+	metadata := calculateMetadata(totalRecords, filters.Page, filters.PageSize)
+
+	return channels, metadata, nil
 }

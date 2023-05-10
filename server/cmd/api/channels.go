@@ -138,3 +138,36 @@ func (app *application) deleteChannelHandler(w http.ResponseWriter, r *http.Requ
 		app.serverErrorResponse(w, r, err)
 	}
 }
+
+func (app *application) listChannelsHandler(w http.ResponseWriter, r *http.Request) {
+	var input struct {
+		data.Filters
+	}
+
+	v := validator.New()
+
+	qs := r.URL.Query()
+
+	input.Filters = data.Filters{
+		Page:         app.readInt(qs, "page", 1, v),
+		PageSize:     app.readInt(qs, "page_size", 20, v),
+		Sort:         app.readString(qs, "sort", "id"),
+		SortSafelist: []string{"id", "title", "-id", "-title"},
+	}
+
+	if data.ValidateFilters(v, input.Filters); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+	}
+
+	channels, metadata, err := app.models.Channels.GetAll(input.Filters)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
+	err = app.writeJSON(w, http.StatusOK, envelope{"channels": channels, "metadata": metadata}, nil)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
+}
