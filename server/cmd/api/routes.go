@@ -1,8 +1,12 @@
 package main
 
-import "github.com/go-chi/chi/v5"
+import (
+	"net/http"
 
-func (app *application) routes() *chi.Mux {
+	"github.com/go-chi/chi/v5"
+)
+
+func (app *application) routes() http.Handler {
 	router := chi.NewRouter()
 
 	router.NotFound(app.notFoundResponse)
@@ -15,5 +19,5 @@ func (app *application) routes() *chi.Mux {
 	router.Get("/v1/channels/{id}", app.showChannelHandler)
 	router.Patch("/v1/channels/{id}", app.updateChannelHandler)
 	router.Delete("/v1/channels/{id}", app.deleteChannelHandler)
-	return router
+	return app.recoverPanic(router)
 }
