@@ -19,5 +19,6 @@ func (app *application) routes() http.Handler {
 	router.Get("/v1/channels/{id}", app.showChannelHandler)
 	router.Patch("/v1/channels/{id}", app.updateChannelHandler)
 	router.Delete("/v1/channels/{id}", app.deleteChannelHandler)
-	return app.recoverPanic(router)
+
+	return app.recoverPanic(app.rateLimit(router))
 }
