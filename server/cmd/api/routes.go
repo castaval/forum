@@ -22,7 +22,7 @@ func (app *application) routes() http.Handler {
 
 	router.Get("/v1/threads", app.listThreadsHandler)
 	router.Post("/v1/threads", app.createThreadHandler)
-	router.Get("/v1//threads/{id}", app.showThreadHandler)
+	router.Get("/v1/threads/{id}", app.showThreadHandler)
 	router.Patch("/v1/threads/{id}", app.updateThreadHandler)
 	router.Delete("/v1/threads/{id}", app.deleteThreadHandler)
 

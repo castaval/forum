@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Fragment } from "react";
 
 type threadProps = {
@@ -17,7 +18,9 @@ const Thread = (thread: threadProps) => {
             <div className="md:w-3/5 md:pl-6">
             <p className="leading-relaxed text-base text-ellipsis overflow-hidden">{thread.text}</p>
             <div className="flex md:mt-4 mt-6">
-                <button className="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Открыть</button>
+                <Link href={`/threads/${thread.id}`}>
+                    <button type="button" className="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Открыть</button>
+                </Link>
                 <a className="text-indigo-500 inline-flex items-center ml-4">
                 <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7"></path>

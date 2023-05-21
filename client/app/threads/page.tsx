@@ -1,65 +1,24 @@
 import Thread from "../../components/Thread"
 
-let threadsArray = [
-    {id: 1, title: "kekw", text: "textBlablba", userId: 1, channelId: 2},
-    {id: 2, title: "hahah", text: "blablal", userId: 1, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
-    {id: 3, title: "abobus", text: "wowoow", userId: 2, channelId: 2},
+type ThreadsData = {
+  metadata: any;
+  threads: any[];
+};
 
-]
+const getThreadsData = async () => {
+  const res = await fetch('http://localhost:4000/v1/threads')
 
+  if (!res.ok) {
+    throw new Error('Failed to fetch threads data');
+  }
 
-const ThreadsPage = () => {
-  const listThreads = threadsArray.map(thread => 
+  return res.json();
+}
+
+const ThreadsPage = async () => {
+  const threadsData: ThreadsData = await getThreadsData();
+
+  const listThreads = threadsData.threads.map(thread => 
       <Thread {...thread}/>
   );
 
