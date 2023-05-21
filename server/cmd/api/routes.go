@@ -20,6 +20,12 @@ func (app *application) routes() http.Handler {
 	router.Patch("/v1/channels/{id}", app.updateChannelHandler)
 	router.Delete("/v1/channels/{id}", app.deleteChannelHandler)
 
+	router.Get("/v1/threads", app.listThreadsHandler)
+	router.Post("/v1/threads", app.createThreadHandler)
+	router.Get("/v1//threads/{id}", app.showThreadHandler)
+	router.Patch("/v1/threads/{id}", app.updateThreadHandler)
+	router.Delete("/v1/threads/{id}", app.deleteThreadHandler)
+
 	router.Post("/v1/users", app.registerUserHandler)
 
 	return app.recoverPanic(app.rateLimit(router))
