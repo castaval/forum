@@ -12,7 +12,10 @@ const getThreadsData = async () => {
     throw new Error('Failed to fetch threads data');
   }
 
-  return res.json();
+  const resjson = await res.json()
+  console.log(resjson)
+
+  return resjson;
 }
 
 const ThreadsPage = async () => {
