@@ -75,14 +75,13 @@ func (c ChannelModel) Update(channel *Channel) error {
 	query := `
 		UPDATE channels
 		SET title = $1, version = version + 1
-		WHERE id = $2 AND version = $3
+		WHERE id = $2
 		RETURNING version
 	`
 
 	args := []interface{}{
 		channel.Title,
 		channel.ID,
-		channel.Version,
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

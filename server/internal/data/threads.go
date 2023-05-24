@@ -24,10 +24,10 @@ func ValidateThreads(v *validator.Validator, thread *Thread) {
 	v.Check(len(thread.Title) <= 500, "title", "must not be more than 500 long")
 	v.Check(thread.Description != "", "description", "must be provided")
 	v.Check(len(thread.Description) >= 10 && len(thread.Description) <= 5000, "description", "must be in range 10-5000 long")
-	v.Check(thread.UserID != 0, "user_id", "must be provided")
-	v.Check(thread.UserID > 0, "user_id", "must be positive number")
-	v.Check(thread.ChannelID != 0, "channel_id", "must be provided")
-	v.Check(thread.ChannelID > 0, "channel_id", "must be positive number")
+	// v.Check(thread.UserID != 0, "user_id", "must be provided")
+	// v.Check(thread.UserID > 0, "user_id", "must be positive number")
+	// v.Check(thread.ChannelID != 0, "channel_id", "must be provided")
+	// v.Check(thread.ChannelID > 0, "channel_id", "must be positive number")
 }
 
 type ThreadModel struct {
@@ -89,7 +89,7 @@ func (t ThreadModel) Update(thread *Thread) error {
 	query := `
 		UPDATE threads
 		SET title = $1, description = $2, version = version + 1
-		WHERE id = $3 AND version = $4
+		WHERE id = $3
 		RETURNING version
 	`
 
@@ -97,7 +97,6 @@ func (t ThreadModel) Update(thread *Thread) error {
 		thread.Title,
 		thread.Description,
 		thread.ID,
-		thread.Version,
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -192,4 +191,20 @@ func (t ThreadModel) GetAll(filters Filters) ([]*Thread, Metadata, error) {
 	metadata := calculateMetadata(totalRecords, filters.Page, filters.PageSize)
 
 	return threads, metadata, nil
+}
+
+func (t ThreadModel) CallProcedure() error {
+	query := `
+		call delete_threads();
+	`
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err := t.DB.ExecContext(ctx, query)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

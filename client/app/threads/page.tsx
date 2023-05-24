@@ -1,3 +1,5 @@
+'use client'
+
 import Thread from "../../components/Thread"
 
 type ThreadsData = {

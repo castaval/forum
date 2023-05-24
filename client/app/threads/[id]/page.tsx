@@ -1,5 +1,7 @@
 'use client';
 
+import Link from "next/link";
+
 import { useParams } from "next/navigation";
 
 type Props = {
@@ -21,6 +23,22 @@ const ThreadPage = async () => {
     const params = useParams();
     const threadData = await getThreadData(params.id)
     const thread = threadData.thread
+
+    const handleDelete = async (event: any) => {
+        event.preventDefault();
+
+        const endpoint = `http://localhost:4000/v1/threads/${params.id}`;
+
+        const options = {
+            method: 'DELETE',
+        };
+
+        const response = await fetch(endpoint, options);
+
+        const result = await response.json();
+        console.log(`Is this update thread response: ${result.data}`)
+    };
+
     console.log(threadData)
     return (
         <>
@@ -50,7 +68,10 @@ const ThreadPage = async () => {
                     </div>
 
                     <div className="mt-6 flex items-center justify-start gap-x-6">
-                        <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Delete</button>
+                        <Link href={`/threads/${params.id}/update`} className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                            <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
+                        </Link>
+                        <button onClick={handleDelete} type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Delete</button>
                     </div>
                     
                     <div className="mt-6 flex items-center justify-end gap-x-6">

@@ -81,6 +81,8 @@ func (app *application) updateThreadHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	fmt.Println(threadID)
+
 	var input struct {
 		Title       *string `json:"title"`
 		Description *string `json:"description"`
@@ -179,6 +181,19 @@ func (app *application) listThreadsHandler(w http.ResponseWriter, r *http.Reques
 	}
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"threads": threads, "metadata": metadata}, nil)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
+}
+
+func (app *application) callProcedureHandler(w http.ResponseWriter, r *http.Request) {
+	err := app.models.Threads.CallProcedure()
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
+	err = app.writeJSON(w, http.StatusOK, envelope{"message": "threads successfully deleted"}, nil)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 	}

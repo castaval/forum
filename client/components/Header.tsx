@@ -1,6 +1,26 @@
+'use client';
+
+
 import Link from "next/link";
 
 const Header = () => {
+    const handleProcedure = async (event: any) => {
+      event.preventDefault();
+
+      const endpoint = `http://localhost:4000/v1/threads/procedure`;
+
+      const options = {
+          method: 'POST',
+      };
+
+      const response = await fetch(endpoint, options);
+
+      const result = await response.json();
+      console.log(`Is this update thread response: ${result.data}`)
+    };
+
+
+
     return (
         <>
         <nav className="bg-gray-800">
@@ -12,14 +32,13 @@ const Header = () => {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <a href="#" className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+                  <Link href="/threads" className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">Threads</Link>
                   <Link href="/threads/create" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                       New Thread
                   </Link>
-                  <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
-                  <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-                  <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
-                  <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
+                  <Link href="#" onClick={handleProcedure} className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                    Procedure
+                  </Link>
                 </div>
               </div>
             </div>

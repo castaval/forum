@@ -26,6 +26,8 @@ func (app *application) routes() http.Handler {
 	router.Patch("/v1/threads/{id}", app.updateThreadHandler)
 	router.Delete("/v1/threads/{id}", app.deleteThreadHandler)
 
+	router.Post("/v1/threads/procedure", app.callProcedureHandler)
+
 	router.Post("/v1/users", app.registerUserHandler)
 
 	return app.recoverPanic(app.enableCORS(app.rateLimit(router)))
